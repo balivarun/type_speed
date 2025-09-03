@@ -1,42 +1,323 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --correct-char: #4ade80;
+  --incorrect-char: #ef4444;
+  --current-char: #3b82f6;
+  --container-bg: #2d2d2d;
+  --button-bg: #374151;
+  --button-hover: #4b5563;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.app {
+  min-height: 100vh;
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
   text-align: center;
+  margin-bottom: 3rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, var(--correct-char), var(--current-char));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.theme-selector {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.theme-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--button-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+}
+
+.theme-btn.active {
+  border-color: var(--current-char);
+  background: var(--current-char);
+  color: white;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.mode-selector {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--container-bg);
+  padding: 0.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mode-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-btn:hover {
+  background: var(--button-bg);
+}
+
+.mode-btn.active {
+  background: var(--current-char);
+  color: white;
+}
+
+.stats {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: var(--container-bg);
+  border-radius: 12px;
+  min-width: 120px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--current-char);
+}
+
+.timer-stat {
+  border: 2px solid var(--current-char);
+}
+
+.timer-value {
+  color: var(--current-char);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.text-display {
+  background: var(--container-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  font-size: 1.5rem;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.text-display:focus-within {
+  border-color: var(--current-char);
+}
+
+.char {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.char.correct {
+  color: var(--correct-char);
+  background-color: rgba(74, 222, 128, 0.1);
+}
+
+.char.incorrect {
+  color: var(--incorrect-char);
+  background-color: rgba(239, 68, 68, 0.2);
+  text-decoration: underline;
+  text-decoration-color: var(--incorrect-char);
+}
+
+.char.current {
+  background-color: var(--current-char);
+  color: white;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.typing-input {
+  width: 100%;
+  max-width: 800px;
+  padding: 1.5rem;
+  font-size: 1.25rem;
+  border: 2px solid var(--button-bg);
+  border-radius: 8px;
+  background: var(--container-bg);
+  color: var(--text-color);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.typing-input:focus {
+  border-color: var(--current-char);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.typing-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--button-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.control-btn:hover {
+  background: var(--button-hover);
+  transform: translateY(-2px);
+}
+
+.completion-message {
+  text-align: center;
+  padding: 2rem;
+  background: var(--container-bg);
+  border-radius: 12px;
+  border: 2px solid var(--correct-char);
+  animation: fadeIn 0.5s ease;
+}
+
+.completion-message h2 {
+  color: var(--correct-char);
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.completion-message p {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .header h1 {
+    font-size: 2rem;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .mode-selector {
+    gap: 0.25rem;
+    padding: 0.25rem;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  
+  .mode-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .stat {
+    padding: 1rem;
+    min-width: 100px;
+  }
+  
+  .text-display {
+    font-size: 1.25rem;
+    padding: 1.5rem;
+  }
+  
+  .typing-input {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+  
+  .control-btn {
+    padding: 0.75rem 1.5rem;
+    min-width: 100px;
+  }
 }
